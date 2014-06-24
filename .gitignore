@@ -1,0 +1,17 @@
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+*.properties
+.classpath
+.settings/
+.loadpath
+*.class
+*.jar
+*.war
+*.out

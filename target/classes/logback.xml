@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<property name="file.log.base.path" value="/logs/registryService" /><!-- 类似于全局变量，可以被引用到，路径最好使用绝对路径 -->
+	<property name="file.log.max.history" value="30" />
+    <property name="file.log.max.size" value="5MB" /> 
+     <!-- 定义一个appender,将不同类别的文件放到不同文件夹，如Error错误放到error文件，通过filter实现-->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${file.log.base.path}/error/all.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <maxHistory>${file.log.max.history}</maxHistory>
+    		<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+    			<maxFileSize>${file.log.max.size}</maxFileSize>
+    		</timeBasedFileNamingAndTriggeringPolicy>
+    	</rollingPolicy>
+      <encoder>  
+        <pattern>%date{ISO8601} %level [%thread] [%class - %method] - [%message]%n</pattern>
+      </encoder>
+    </appender>
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${file.log.base.path}/info/all.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <maxHistory>${file.log.max.history}</maxHistory>
+    		<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+    			<maxFileSize>${file.log.max.size}</maxFileSize>
+    		</timeBasedFileNamingAndTriggeringPolicy>
+    	</rollingPolicy>
+      <encoder>  
+        <pattern>%date{ISO8601} %level [%thread] [%class - %method] - [%message]%n</pattern>
+      </encoder>
+    </appender>
+	
+	
+	<root level="info">
+		<appender-ref ref="ERROR" />
+		<appender-ref ref="INFO" />
+	</root>
+</configuration>	
